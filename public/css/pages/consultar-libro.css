@@ -1,0 +1,55 @@
+/* consultar-libro.css */
+.consultar-libro {
+  margin-top: 3rem;
+}
+
+.consultar-libro .title {
+  background-color: #fdd835;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.consultar-libro .form-label {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.consultar-libro .form-control {
+  font-size: 1.25rem;
+  padding: 0.75rem;
+  border: 2px solid #000;
+  border-radius: 0.25rem;
+}
+
+.consultar-libro .btn-primary {
+  background-color: #00aaff;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  color: #fff;
+}
+
+.consultar-libro .btn-primary:hover {
+  background-color: #008ecc;
+}
+
+.table-header {
+  background-color: #fdd835;
+  font-weight: bold;
+}
+
+.table {
+  margin-top: 2rem;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 2px solid #000; /* Bordes más gruesos */
+}

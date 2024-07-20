@@ -1,0 +1,31 @@
+{{!-- views/pages/solicitar-prestamo-page/solicitud-realizada.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/solicitud-realizada.css">
+{{/inline}}
+
+{{> styles}}
+
+<div class="container solicitud-realizada">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">SOLICITUD REALIZADA</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="info">
+                <p><strong>Código del solicitante:</strong> {{codigo}}</p>
+                <p><strong>Libro solicitado:</strong> {{libro}}</p>
+                <p><strong>Fecha de préstamo:</strong> {{fecha}}</p>
+                <p><strong>Hora límite de entrega:</strong> {{horaLimite}}</p>
+                <button class="btn btn-primary btn-lg" onclick="volver('{{tipoUsuario}}')">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function volver(tipoUsuario) {
+    window.location.href = `/solicitar-prestamo/${tipoUsuario}`;
+}
+</script>

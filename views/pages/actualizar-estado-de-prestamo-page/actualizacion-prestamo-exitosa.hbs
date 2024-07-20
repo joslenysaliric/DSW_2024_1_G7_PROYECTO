@@ -1,0 +1,24 @@
+{{!-- views/pages/actualizar-estado-de-prestamo-page/actualizar-estado-de-prestamo.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/actualizacion-prestamo-exitosa.css">
+{{/inline}}
+
+{{> styles}}
+
+<div class="container actualizacion-prestamo-exitosa">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">¡ACTUALIZADO EXITOSAMENTE!</h2>
+        </div>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary btn-lg" onclick="aceptar()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function aceptar() {
+        window.location.href = "/actualizar-estado-de-prestamo";
+    }
+</script>

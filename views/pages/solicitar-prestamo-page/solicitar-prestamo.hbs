@@ -1,0 +1,75 @@
+{{!-- views/pages/solicitar-prestamo-page/solicitar-prestamo.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/solicitar-prestamo.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{{/inline}}
+
+{{> styles}}
+
+<div class="container solicitar-prestamo">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">SOLICITAR PRÉSTAMO</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-8 col-lg-6">
+            {{#if errorMessage}}
+            <div id="mensajeError" class="alert alert-danger text-center" role="alert">
+                {{errorMessage}}
+            </div>
+            {{/if}}
+
+            {{#if successMessage}}
+            <div id="mensajeExito" class="alert alert-success text-center" role="alert">
+                {{successMessage}}
+            </div>
+            {{/if}}
+
+            <form class="text-center" id="prestamoForm" method="post" action="/solicitar-prestamo">
+                <div class="form-group mb-3">
+                    <label for="codigoSolicitante" class="form-label">Código del solicitante:</label>
+                    <input type="text" id="codigoSolicitante" name="codigoSolicitante" class="form-control form-control-lg" placeholder="Código del solicitante">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="tituloLibro" class="form-label">Título del libro:</label>
+                    <select id="tituloLibro" name="tituloLibro" class="form-control form-control-lg">
+                        <option value="">Seleccione un libro</option>
+                        {{#each libros}}
+                        <option value="{{this.nombre}}">{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="fechaPrestamo" class="form-label">Fecha del préstamo:</label>
+                    <div class="input-group">
+                        <input type="text" id="fechaPrestamo" name="fechaPrestamo" class="form-control form-control-lg" placeholder="Fecha del préstamo">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+                <input type="hidden" id="tipoUsuario" name="tipoUsuario" value="{{tipoUsuario}}">
+                <button type="submit" class="btn btn-primary btn-lg">SOLICITAR</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const flatpickrInstance = flatpickr('#fechaPrestamo', {
+        dateFormat: 'Y-m-d',
+        altInput: true,
+        altFormat: 'Y-m-d',
+        allowInput: true,
+        minDate: today,
+        maxDate: new Date(currentYear, 11, 31)
+    });
+
+    document.getElementById('calendarIcon').addEventListener('click', function() {
+        flatpickrInstance.open();
+    });
+});
+</script>

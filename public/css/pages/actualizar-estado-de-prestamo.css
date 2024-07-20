@@ -1,0 +1,81 @@
+/* actualizar-estado-de-prestamo.css */
+.actualizar-prestamo {
+  margin-top: 3rem;
+}
+
+.actualizar-prestamo .title {
+  background-color: #fdd835;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 2rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.actualizar-prestamo .form-control {
+  font-size: 1.25rem;
+  padding: 0.75rem;
+  border: 2px solid #000;
+  border-radius: 0.25rem;
+}
+
+.actualizar-prestamo .input-group-text {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-left: 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.actualizar-prestamo .form-select {
+  font-size: 1.25rem;
+  border: 2px solid #000;
+  border-radius: 0.25rem;
+}
+
+.actualizar-prestamo .btn-secondary,
+.actualizar-prestamo .btn-primary {
+  background-color: #00aaff;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.actualizar-prestamo .btn-secondary:hover,
+.actualizar-prestamo .btn-primary:hover {
+  background-color: #008ecc;
+}
+
+.table-header {
+  background-color: #007bff; /* Estilo de encabezado */
+  color: white; /* Color del texto del encabezado */
+  font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05); /* Color de las filas impares */
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); /* Color de las filas al pasar el mouse */
+}
+
+.table {
+  margin-top: 2rem;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 2px solid #000; /* Bordes más gruesos */
+}

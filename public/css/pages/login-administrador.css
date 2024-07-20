@@ -1,0 +1,35 @@
+/* public/css/pages/login-administrador.css */
+
+.login-administrador {
+    margin-top: 3rem;
+}
+
+.login-administrador .title {
+    background-color: #fdd835;
+    color: #000;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 2rem;
+}
+
+.login-administrador .form-control {
+    font-size: 1.25rem;
+    padding: 0.75rem;
+    border: 2px solid #000;
+    border-radius: 0.25rem;
+}
+
+.login-administrador .btn-primary {
+    background-color: #00aaff;
+    border: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    color: #fff;
+}
+
+.login-administrador .btn-primary:hover {
+    background-color: #008ecc;
+}

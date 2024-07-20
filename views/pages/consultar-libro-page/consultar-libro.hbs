@@ -1,0 +1,104 @@
+<!-- views/pages/consultar-libro-page/consultar-libro.hbs -->
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/consultar-libro.css">
+{{/inline}}
+
+{{> styles }}
+
+<div class="container consultar-libro">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">CONSULTAR LIBRO</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form id="consultarLibroForm" class="text-center">
+                <div class="form-group mb-3">
+                    <label for="tituloLibroSelect" class="form-label">Seleccione un libro:</label>
+                    <select id="tituloLibroSelect" name="tituloLibroSelect" class="form-control form-control-lg">
+                        <option value="">Seleccione un libro</option>
+                        {{#each libros}}
+                        <option value="{{this.nombre}}">{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">CONSULTAR</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="table-header">
+                        <th>Código</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Editorial</th>
+                        <th>Cantidad</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="resultadosLibros">
+                    <!-- Aquí puedes agregar las filas de los libros -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row justify-content-center" id="errorInfo" style="display: none;">
+        <div class="col-12 text-center">
+            <h3 class="error-msg">LIBRO NO ENCONTRADO</h3>
+            <p>Seleccione un libro válido. Vuelva a intentarlo.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('consultarLibroForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const tituloLibro = document.getElementById('tituloLibroSelect').value;
+
+    if (!tituloLibro) {
+        alert('Por favor seleccione un título de libro.');
+        return;
+    }
+
+    const tipoUsuario = '{{tipoUsuario}}';
+    fetch(`/consultar-libro/${tipoUsuario}?titulo_libro=${encodeURIComponent(tituloLibro)}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => { throw new Error(error.message); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.length > 0) {
+                const tbody = document.getElementById('resultadosLibros');
+                tbody.innerHTML = ''; // Clear previous results
+
+                data.forEach(libro => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${libro.codigo_libro}</td>
+                        <td>${libro.nombre}</td>
+                        <td>${libro.autor}</td>
+                        <td>${libro.editorial}</td>
+                        <td>${libro.cantidad}</td>
+                        <td>${libro.estado}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                document.getElementById('errorInfo').style.display = 'none';
+            } else {
+                document.getElementById('resultadosLibros').innerHTML = '';
+                document.getElementById('errorInfo').style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error al consultar el libro:', error);
+            alert(`Ocurrió un error al consultar el libro: ${error.message}`);
+        });
+});
+</script>

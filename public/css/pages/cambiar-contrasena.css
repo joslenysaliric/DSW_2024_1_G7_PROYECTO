@@ -1,0 +1,104 @@
+.container {
+    margin-top: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .container h2 {
+    background-color: #fdd835;
+    color: #000;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .container .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .container .form-group label {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #000;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .container .form-control {
+    font-size: 1.25rem;
+    padding: 0.75rem;
+    border: 2px solid #000;
+    border-radius: 2rem;
+    width: 100%;
+  }
+  
+  .container .btn-primary {
+    background-color: #00aaff;
+    border: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    color: #fff;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .container .btn-primary:hover {
+    background-color: #008ecc;
+  }
+  
+  .container .btn-success, .container .btn-secondary {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .container .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+  
+  .container .btn-success:hover {
+    background-color: #218838;
+  }
+  
+  .container .btn-secondary {
+    background-color: #ad5447;
+    border: none;
+  }
+  
+  .container .btn-secondary:hover {
+    background-color: #ef1c05;
+  }
+  
+  #datosPersonal {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 0.25rem;
+  }
+  
+  #datosPersonal h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .alert {
+    margin-top: 1rem;
+  }
+  
+  #btnAceptarExitoDiv {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  

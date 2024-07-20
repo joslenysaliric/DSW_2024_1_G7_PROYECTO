@@ -1,0 +1,27 @@
+/* public/css/pages/actualizacion-exitosa.css */
+.actualizacion-exitosa {
+  margin-top: 3rem;
+}
+
+.actualizacion-exitosa .title {
+  background-color: #fdd835;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  background-color: #00aaff;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #008ecc;
+}

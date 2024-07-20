@@ -1,0 +1,142 @@
+{{!-- views/pages/actualizar-estado-de-prestamo-page/actualizar-estado-de-prestamo.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/actualizar-estado-de-prestamo.css">
+{{/inline}}
+
+{{> styles}}
+
+<div class="container actualizar-prestamo">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">ACTUALIZAR ESTADO DE PRÉSTAMO</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form id="buscarPrestamoForm" class="text-center">
+                <div class="input-group mb-3">
+                    <input type="text" id="codigoInput" class="form-control form-control-lg" placeholder="Código del estudiante" aria-label="Código del estudiante">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <select id="estadoFiltro" class="form-select form-select-lg" aria-label="Seleccionar Estado">
+                        <option value="">Estado</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Entregado">Entregado</option>
+                        <option value="Cancelado">Cancelado</option>
+                        <option value="Devuelto">Devuelto</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="reset" id="limpiarBtn" class="btn btn-secondary btn-lg">LIMPIAR</button>
+                    <button type="submit" class="btn btn-primary btn-lg">BUSCAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <form id="actualizarEstadoForm">
+                <table class="table table-striped table-hover table-bordered text-center">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Código usuario</th>
+                            <th>Usuario</th>
+                            <th>Código del libro</th>
+                            <th>Título del libro</th>
+                            <th>Fecha de Préstamo</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultadosPrestamos">
+                        <!-- Aquí se insertarán las filas de resultados de préstamos -->
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary btn-lg">ACTUALIZAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('buscarPrestamoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const estado = document.getElementById('estadoFiltro').value;
+    const codigo_estudiante = document.getElementById('codigoInput').value;
+
+    fetch(`/consultar-prestamos-por-estado-o-codigo?estado=${encodeURIComponent(estado)}&codigo_estudiante=${encodeURIComponent(codigo_estudiante)}`)
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('resultadosPrestamos');
+            tbody.innerHTML = ''; // Clear previous results
+
+            data.forEach(prestamo => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${prestamo.codigo_solicitante}</td>
+                    <td>${prestamo.nombre_usuario} ${prestamo.apellido_usuario}</td>
+                    <td>${prestamo.codigo_libro}</td>
+                    <td>${prestamo.nombre_libro}</td>
+                    <td>${prestamo.fecha_prestamo}</td>
+                    <td>
+                        <select name="estado" class="form-control estado-select" data-id="${prestamo.id_HistorialPrestamos}">
+                            <option value="Pendiente" ${prestamo.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                            <option value="Entregado" ${prestamo.estado === 'Entregado' ? 'selected' : ''}>Entregado</option>
+                            <option value="Cancelado" ${prestamo.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                            <option value="Devuelto" ${prestamo.estado === 'Devuelto' ? 'selected' : ''}>Devuelto</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error al consultar los préstamos:', error);
+            alert(`Ocurrió un error al buscar los préstamos: ${error.message}`);
+        });
+});
+
+document.getElementById('limpiarBtn').addEventListener('click', function() {
+    document.getElementById('codigoInput').value = '';
+    document.getElementById('estadoFiltro').value = '';
+    const filas = document.querySelectorAll('table tbody tr');
+    filas.forEach(fila => {
+        fila.style.display = '';
+    });
+});
+
+document.getElementById('actualizarEstadoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const updates = [];
+
+    const filas = document.querySelectorAll('table tbody tr');
+    filas.forEach(fila => {
+        const estadoSelect = fila.querySelector('.estado-select');
+        const nuevoEstado = estadoSelect.value;
+        const id = estadoSelect.getAttribute('data-id');
+
+        updates.push({ id_HistorialPrestamos: id, estado: nuevoEstado });
+    });
+
+    fetch('/actualizar-estado-prestamo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updates),
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/actualizacion-prestamo-exitosa';
+        } else {
+            return response.json().then(err => {
+                throw new Error(err.message);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error al actualizar los estados:', error);
+        alert(`Ocurrió un error al actualizar los estados: ${error.message}`);
+    });
+});
+</script>

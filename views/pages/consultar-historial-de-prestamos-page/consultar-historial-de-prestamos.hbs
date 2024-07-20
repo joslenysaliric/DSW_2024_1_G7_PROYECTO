@@ -1,0 +1,100 @@
+<!-- views/pages/consultar-historial-de-prestamos-page/consultar-historial-de-prestamos.hbs -->
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/consultar-historial-de-prestamos.css">
+{{/inline}}
+
+{{>styles}}
+
+<div class="container consultar-historial-prestamos">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">CONSULTAR HISTORIAL DE PRÉSTAMO</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form id="consultarForm" class="text-center">
+                <div class="form-group mb-3">
+                    <label for="codigoUsuario" class="form-label">Código del usuario:</label>
+                    <input type="text" id="codigoUsuario" name="codigoUsuario" class="form-control form-control-lg" placeholder="Ingrese código">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="tituloLibro" class="form-label">Título del libro:</label>
+                    <select id="tituloLibro" name="tituloLibro" class="form-control form-control-lg">
+                        <option value="">Seleccione un libro</option>
+                        {{#each libros}}
+                        <option value="{{this.nombre}}">{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">CONSULTAR</button>
+                <button type="button" id="limpiarBtn" class="btn btn-secondary btn-lg ml-2">LIMPIAR</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5" id="historialInfo" style="display: none;">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Código usuario</th>
+                        <th>Usuario</th>
+                        <th>Código del libro</th>
+                        <th>Título del libro</th>
+                        <th>Fecha de préstamo</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="historialTableBody">
+                    <!-- Los resultados se insertarán aquí -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('consultarForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const codigoUsuario = document.getElementById('codigoUsuario').value;
+    const tituloLibro = document.getElementById('tituloLibro').value;
+
+    fetch(`/consultar-historial-de-prestamos/datos?codigo_estudiante=${codigoUsuario}&titulo_libro=${tituloLibro}`)
+        .then(response => response.json())
+        .then(data => {
+            const historialTableBody = document.getElementById('historialTableBody');
+            historialTableBody.innerHTML = ''; // Limpiar cualquier resultado previo
+
+            if (data.length > 0) {
+                data.forEach(historial => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${codigoUsuario}</td>
+                        <td>${historial.nombre_usuario} ${historial.apellido_usuario}</td>
+                        <td>${historial.codigo_libro}</td>
+                        <td>${historial.nombre_libro}</td>
+                        <td>${historial.fecha_prestamo}</td>
+                        <td>${historial.estado}</td>
+                    `;
+                    historialTableBody.appendChild(row);
+                });
+                document.getElementById('historialInfo').style.display = 'block';
+            } else {
+                alert('No se encontraron resultados para los parámetros proporcionados.');
+                document.getElementById('historialInfo').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error al consultar el historial de préstamos:', error);
+            alert('Ocurrió un error al consultar el historial de préstamos.');
+        });
+});
+
+document.getElementById('limpiarBtn').addEventListener('click', function() {
+    document.getElementById('codigoUsuario').value = '';
+    document.getElementById('tituloLibro').value = '';
+    document.getElementById('historialTableBody').innerHTML = '';
+    document.getElementById('historialInfo').style.display = 'none';
+});
+</script>

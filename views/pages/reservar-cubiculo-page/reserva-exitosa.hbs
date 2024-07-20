@@ -1,0 +1,31 @@
+{{!-- views/pages/reserva-exitosa-page/reserva-exitosa.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/reserva-exitosa.css">
+{{/inline}}
+
+{{>styles}}
+
+<div class="container reserva-exitosa">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">RESERVA EXITOSA!</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="p-3 bg-light rounded shadow-sm text-center">
+                <p><strong>Código del estudiante:</strong> {{codigoEstudiante}}</p>
+                <p><strong>N° de cubículo:</strong> {{cubiculo}}</p>
+                <p><strong>Hora inicio de la reserva:</strong> {{horaInicio}}</p>
+                <p><strong>Duración de la reserva:</strong> 60 min</p>
+                <button class="btn btn-primary btn-lg" onclick="volver('{{tipoUsuario}}')">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function volver(tipoUsuario) {
+    window.location.href = `/reservar-cubiculo/${tipoUsuario}`;
+}
+</script>

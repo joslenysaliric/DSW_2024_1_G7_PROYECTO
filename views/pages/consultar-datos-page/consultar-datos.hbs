@@ -1,0 +1,95 @@
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/consultar-datos.css">
+{{/inline}}
+
+{{> styles }}
+
+<div class="container consultar-datos">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">CONSULTAR DATOS</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form id="consultarForm" class="text-center">
+                <div class="form-group mb-3">
+                    <label for="codigoUsuario" class="form-label">Inserte el código del usuario:</label>
+                    <input type="text" id="codigoUsuario" class="form-control form-control-lg" placeholder="Ingrese código">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">CONSULTAR</button>
+                <button type="button" id="limpiarBtn" class="btn btn-secondary btn-lg ml-2">LIMPIAR</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5" id="usuarioInfo" style="display: none;">
+        <div class="col-12 text-center">
+            <h2 class="title">USUARIO ENCONTRADO</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <img src="/images/usuario.png" alt="Imagen de usuario" class="img-fluid">
+                            <p id="codigoUsuarioInfo" class="mt-2 codigo-centro"></p>
+                        </div>
+                        <div class="col-8">
+                            <p><strong>Nombres:</strong> <span id="nombresUsuario"></span></p>
+                            <p><strong>Apellidos:</strong> <span id="apellidosUsuario"></span></p>
+                            <p><strong>Escuela:</strong> <span id="escuelaUsuario"></span></p>
+                            <p><strong>Ciclo:</strong> <span id="cicloUsuario"></span></p>
+                            <p><strong>DNI:</strong> <span id="dniUsuario"></span></p>
+                            <p><strong>Calidad de usuario:</strong> <span id="calidadUsuario"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('consultarForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const codigoUsuario = document.getElementById('codigoUsuario').value;
+
+    if (!codigoUsuario) {
+        alert('Campo vacío. Por favor, asegúrese de ingresar el código del usuario a consultar.');
+        return;
+    }
+
+    fetch(`/consultar-datos?codigo_estudiante=${codigoUsuario}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                document.getElementById('usuarioInfo').style.display = 'none';
+            } else {
+                document.getElementById('codigoUsuarioInfo').textContent = codigoUsuario;
+                document.getElementById('nombresUsuario').textContent = data.nombre;
+                document.getElementById('apellidosUsuario').textContent = data.apellido;
+                document.getElementById('escuelaUsuario').textContent = data.escuela;
+                document.getElementById('cicloUsuario').textContent = data.ciclo;
+                document.getElementById('dniUsuario').textContent = data.DNI;
+                document.getElementById('calidadUsuario').textContent = data.calidad_usuario;
+                document.getElementById('usuarioInfo').style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error al consultar el usuario:', error);
+            alert('Hubo un error al consultar el usuario.');
+        });
+});
+
+document.getElementById('limpiarBtn').addEventListener('click', function() {
+    document.getElementById('codigoUsuario').value = '';
+    document.getElementById('codigoUsuarioInfo').textContent = '';
+    document.getElementById('nombresUsuario').textContent = '';
+    document.getElementById('apellidosUsuario').textContent = '';
+    document.getElementById('escuelaUsuario').textContent = '';
+    document.getElementById('cicloUsuario').textContent = '';
+    document.getElementById('dniUsuario').textContent = '';
+    document.getElementById('calidadUsuario').textContent = '';
+    document.getElementById('usuarioInfo').style.display = 'none';
+});
+</script>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/pages/consultar-cubiculo.css">
+    <style>
+        .consultar-cubiculo .resultado-consulta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .consultar-cubiculo .resumen-consulta, .consultar-cubiculo .cubiculos-mostrados {
+            flex: 1;
+        }
+        .consultar-cubiculo .cubiculo {
+            margin: 5px;
+            text-align: center;
+        }
+        .consultar-cubiculo .cubiculo img {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container consultar-cubiculo">
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 text-center">
+                <h2 class="title">Consultar Cubículo</h2>
+                <p>Seleccione un horario para ver los cubículos disponibles:</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <form id="consultarCubiculoForm" class="text-center">
+                    <div class="form-group mb-3">
+                        <label for="horaSeleccionada" class="form-label">Selecciona la hora:</label>
+                        <select id="horaSeleccionada" class="form-control form-control-lg">
+                            {{#each horasDisponibles}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">CONSULTAR</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4 resultado-consulta" style="display: none;">
+            <div class="resumen-consulta">
+                <h3>Resultados de la consulta</h3>
+                <p>Hora seleccionada: <span id="horaMostrada"></span></p>
+                <p>Cantidad de cubículos disponibles: <span id="cantidadDisponibles"></span></p>
+                <p>Cubículo más próximo a desocuparse: <span id="cubiculoProximo"></span></p>
+                <p>Próxima disponibilidad: <span id="horaProximoDesocupar"></span></p>
+                <button class="btn btn-primary btn-lg" onclick="restaurarConsulta()">Aceptar</button>
+            </div>
+            <div class="cubiculos-mostrados" id="cubiculosMostrados">
+                <!-- Aquí se mostrarán dinámicamente los cubículos disponibles -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('consultarCubiculoForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Evita el envío del formulario
+
+        const horaSeleccionada = document.getElementById('horaSeleccionada').value;
+
+        try {
+            const response = await fetch(`/consultar-cubiculo?hora=${encodeURIComponent(horaSeleccionada)}`);
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            const resultados = await response.json();
+
+            document.getElementById('horaMostrada').innerText = horaSeleccionada;
+            document.getElementById('cantidadDisponibles').innerText = resultados.cantidadDisponibles;
+            document.getElementById('cubiculoProximo').innerText = resultados.cubiculoProximo;
+            document.getElementById('horaProximoDesocupar').innerText = resultados.horaProximoDesocupar;
+            
+            // Actualizar la visualización de cubículos
+            const cubiculosMostrados = document.getElementById('cubiculosMostrados');
+            cubiculosMostrados.innerHTML = resultados.cubiculos.map(cubiculo => `
+                <div class="cubiculo">
+                    <img src="${cubiculo.imagenUrl}" alt="${cubiculo.estado}" />
+                    <p>${cubiculo.cubiculo_id}</p>
+                </div>
+            `).join('');
+
+            document.querySelector('.resultado-consulta').style.display = 'flex';
+        } catch (error) {
+            console.error('Error al consultar cubículos:', error);
+        }
+    });
+
+    function restaurarConsulta() {
+        document.getElementById('horaSeleccionada').value = '';
+        document.querySelector('.resultado-consulta').style.display = 'none';
+    }
+    </script>
+</body>
+</html>

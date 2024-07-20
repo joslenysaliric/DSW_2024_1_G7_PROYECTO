@@ -1,0 +1,111 @@
+.consultar-datos {
+  margin-top: 3rem;
+}
+
+.consultar-datos .title {
+  background-color: #fdd835;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.consultar-datos .form-label {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.consultar-datos .form-control {
+  font-size: 1.25rem;
+  padding: 0.75rem;
+  border: 2px solid #000;
+  border-radius: 2rem;
+}
+
+.consultar-datos .btn-primary {
+  background-color: #00aaff;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  color: #fff;
+}
+
+.consultar-datos .btn-primary:hover {
+  background-color: #008ecc;
+}
+
+.consultar-datos .btn-secondary {
+  background-color: #ad5447;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  color: #fff;
+}
+
+.consultar-datos .btn-secondary:hover {
+  background-color: #ef1c05;
+}
+
+#usuarioInfo .card {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+#usuarioInfo .card-body {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+#usuarioInfo img {
+  max-width: 150px; /* Aumenta el tamaño máximo de la imagen */
+  border-radius: 50%;
+}
+
+#usuarioInfo p {
+  margin: 15px 0;
+  text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.col-4 {
+  flex: auto;
+  width: auto;
+}
+
+.col-4 .mt-2 {
+  background-color: #1e2e5d;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.recuadro {
+  border: 2px solid #000;
+  font-weight: bold;
+  padding: 0.05rem 1rem;
+  border-radius: 2rem;
+  text-align: left; /* Alinea el texto a la izquierda */
+  white-space: pre-wrap; /* Permite saltos de línea */
+  word-break: break-word; /* Ajusta las palabras para que no se desborden */
+}
+
+.codigo-centro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; /* Mantén la altura automática para no forzar el tamaño */
+  margin: 0;
+  font-size: 1rem; /* Ajusta esto al tamaño de fuente que desees */
+  font-weight: bold; /* Si deseas hacer el texto más visible */
+  width: 100%; /* Asegúrate de que el contenedor ocupe todo el ancho disponible */
+}

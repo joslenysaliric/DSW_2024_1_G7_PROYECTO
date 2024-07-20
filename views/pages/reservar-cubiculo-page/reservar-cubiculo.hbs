@@ -1,0 +1,67 @@
+{{!-- views/pages/reservar-cubiculo-page/reservar-cubiculo.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/reservar-cubiculo.css">
+<link rel="stylesheet" href="/css/cubiculos.css"> <!-- Añadir el CSS de cubículos -->
+{{/inline}}
+
+{{> styles}}
+
+<div class="container reservar-cubiculo">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h2 class="title">RESERVAR CUBÍCULO</h2>
+            <p>Seleccione un cubículo disponible:</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4 mb-4">
+            <div class="p-3 bg-light rounded shadow-sm">
+            {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+            {{/if}}
+            <form id="reservaCubiculoForm" class="text-center" action="/reservar-cubiculo/estudiante" method="post">
+                <h5>Ingrese el código del estudiante:</h5>
+                <input type="text" name="codigoEstudiante" id="codigoEstudiante" class="form-control mb-3" placeholder="Ingrese código" required>
+                <h5>Cubículo seleccionado:</h5>
+                <input type="text" name="cubiculoId" id="cubiculoSeleccionado" class="form-control mb-3" readonly required>
+                <input type="hidden" name="tipoUsuario" value="{{tipoUsuario}}">
+                <button class="btn btn-primary btn-lg w-100 mt-3" id="reservarBtn">RESERVAR</button>
+            </form>
+            </div>
+        </div>
+        
+        <div class="col-12 col-md-8 mb-4">
+            <div class="cubiculos-container">
+                {{#each cubiculos}}
+                <div class="cubiculo {{estado}}" data-cubiculo="{{cubiculo_id}}" onclick="seleccionarCubiculo('{{cubiculo_id}}')">
+                    <img src="{{imagenUrl}}" alt="Cubículo {{cubiculo_id}}">
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function seleccionarCubiculo(cubiculoId) {
+    console.log('Cubículo seleccionado:', cubiculoId); // Log para verificar que se está detectando el clic
+    const selectedCubiculo = document.querySelector(`.cubiculo[data-cubiculo="${cubiculoId}"]`);
+    if (selectedCubiculo.classList.contains('Reservado')) {
+        alert('Este cubículo está reservado en este horario.');
+        return;
+    }
+    document.querySelectorAll('.cubiculo').forEach(cubiculo => {
+        cubiculo.classList.remove('selected');
+    });
+    selectedCubiculo.classList.add('selected');
+    document.getElementById('cubiculoSeleccionado').value = cubiculoId;
+}
+
+document.getElementById('reservaCubiculoForm').addEventListener('submit', function(event) {
+    const cubiculoId = document.getElementById('cubiculoSeleccionado').value;
+    if (!cubiculoId) {
+        alert('Seleccione un cubículo.');
+        event.preventDefault();
+    }
+});
+</script>

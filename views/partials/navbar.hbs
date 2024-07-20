@@ -1,0 +1,134 @@
+<aside id="sidebar">
+  <div class="text-center mt-4">
+    <i
+      class="fas fa-user-circle user-icon"
+      style="font-size: 6rem; color: white"
+    ></i>
+    <div class="sidebar-rol-name">
+      <p style="color: white; font-size: 1rem">Personal de apoyo</p>
+    </div>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="sidebar-item">
+      <a href="/inicio-personal" class="sidebar-link">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#usuarios"
+        aria-expanded="false"
+        aria-controls="usuarios"
+      >
+        <i class="fas fa-users"></i>
+        <span>Usuarios</span>
+      </a>
+      <ul
+        id="usuarios"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/consultar-datos" class="sidebar-link">Consultar datos</a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#libros"
+        aria-expanded="false"
+        aria-controls="libros"
+      >
+        <i class="lni lni-book"></i>
+        <span>Libros</span>
+      </a>
+      <ul
+        id="libros"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/consultar-libro/personal" class="sidebar-link">Consultar libro</a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#prestamo"
+        aria-expanded="false"
+        aria-controls="prestamo"
+      >
+        <i class="fas fa-book"></i>
+        <span>Préstamo</span>
+      </a>
+      <ul
+        id="prestamo"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/solicitar-prestamo/personal" class="sidebar-link">Solicitar préstamo</a>
+        </li>
+        <li class="sidebar-item">
+          <a
+            href="/actualizar-estado-de-prestamo"
+            class="sidebar-link"
+          >Actualizar estado de préstamo</a>
+        </li>
+        <li class="sidebar-item">
+          <a
+            href="/consultar-historial-de-prestamos"
+            class="sidebar-link"
+          >Consultar historial de préstamos</a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#cubiculo"
+        aria-expanded="false"
+        aria-controls="cubiculo"
+      >
+        <i class="fas fa-book-reader"></i>
+        <span>Cubículo</span>
+      </a>
+      <ul
+        id="cubiculo"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/reservar-cubiculo/personal" class="sidebar-link">Reservar cubículo</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/consultar-cubiculo" class="sidebar-link">Consultar cubículo</a>
+        </li>
+        <li class="sidebar-item">
+          <a
+            href="/actualizar-estado-de-cubiculo"
+            class="sidebar-link"
+          >Actualizar estado de cubículo</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <a href="/" class="sidebar-link">
+      <i class="fas fa-power-off"></i>
+      <span>Logout</span>
+    </a>
+  </div>
+</aside>

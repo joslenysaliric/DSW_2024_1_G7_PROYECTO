@@ -1,0 +1,73 @@
+{{!-- views/pages/cambiar-contrasena.hbs --}}
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/pages/cambiar-contrasena.css">
+{{/inline}}
+
+{{>styles}}
+
+<div class="container mt-5">
+  <h2>Cambio de Contraseña de Personal de Apoyo</h2>
+  
+  {{!-- Mostrar el formulario de consulta del código sólo si no hay mensaje de éxito --}}
+  {{#unless successMessage}}
+  {{#unless personal}}
+  <form id="consultaCodigoForm" method="get" action="/cambiar-contrasena">
+    <div class="form-group">
+      <label for="codigoPersonal">Código del Personal de Apoyo</label>
+      <input type="text" class="form-control" id="codigoPersonal" name="codigo" placeholder="Ingrese el código">
+    </div>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+  </form>
+  {{/unless}}
+  {{/unless}}
+
+  {{!-- Mostrar los datos del personal y el formulario de cambio de contraseña sólo si no hay mensaje de éxito --}}
+  {{#if personal}}
+  <div id="datosPersonal">
+    <h3>Datos del Personal</h3>
+    <p><strong>Nombre:</strong> {{personal.nombre}} {{personal.apellido}}</p>
+    <p><strong>Cargo:</strong> {{personal.cargo}}</p>
+    <p><strong>Código:</strong> {{personal.id_personal_de_apoyo}}</p>
+  </div>
+  <form id="cambioContrasenaForm" method="post" action="/usuarios/actualizarContrasena">
+    <input type="hidden" name="codigo" value="{{personal.id_personal_de_apoyo}}">
+    <div class="form-group">
+      <label for="nuevaContrasena">Nueva Contraseña</label>
+      <input type="password" class="form-control" id="nuevaContrasena" name="nuevaContrasena" placeholder="Nueva Contraseña" required>
+    </div>
+    <div class="form-group">
+      <label for="confirmarContrasena">Confirmar Nueva Contraseña</label>
+      <input type="password" class="form-control" id="confirmarContrasena" name="confirmarContrasena" placeholder="Confirmar Nueva Contraseña" required>
+    </div>
+    <div class="form-group d-flex justify-content-between">
+      <button type="submit" class="btn btn-success">Aceptar</button>
+      <button type="button" id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+    </div>
+  </form>
+  {{/if}}
+
+  {{#if errorMessage}}
+  <div id="mensajeError" class="alert alert-danger" role="alert">
+    {{errorMessage}}
+  </div>
+  {{/if}}
+
+  {{!-- Mostrar el mensaje de éxito y el botón Aceptar --}}
+  {{#if successMessage}}
+  <div id="mensajeExito" class="alert alert-success" role="alert">
+    {{successMessage}}
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-success mt-2" onclick="window.location.href='/cambiar-contrasena';">Aceptar</button>
+  </div>
+  {{/if}}
+</div>
+
+<script>
+document.getElementById('btnCancelar').addEventListener('click', function() {
+  // Ocultar formularios y mostrar el formulario de consulta
+  document.getElementById('cambioContrasenaForm').style.display = 'none';
+  document.getElementById('datosPersonal').style.display = 'none';
+  document.getElementById('consultaCodigoForm').style.display = 'block';
+});
+</script>

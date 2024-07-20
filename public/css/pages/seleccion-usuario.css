@@ -1,0 +1,59 @@
+.seleccion-usuario {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.seleccion-usuario .title {
+  background-color: #fdd835;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.usuarios {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.usuario {
+  background-color: #f0f0f0;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+  margin: 0.5rem; /* Margen entre los recuadros */
+}
+
+.usuario .image {
+  margin-bottom: 1rem;
+}
+
+.usuario .image img {
+  width: 100%; /* Ajusta la imagen al 100% del contenedor */
+  height: 150px; /* Altura fija para las imágenes */
+  object-fit: cover; /* Ajusta la imagen para que cubra todo el contenedor sin distorsionarse */
+  border-radius: 0.25rem;
+}
+
+.usuario .btn-primary {
+  background-color: #00aaff;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.75rem 0.6rem;
+  border-radius: 0.25rem;
+  color: #fff;
+  width: 100%;
+  cursor: pointer;
+  white-space: pre-wrap; /* Permite saltos de línea */
+  word-break: break-word; /* Ajusta las palabras para que no se desborden */
+}
+
+.usuario .btn-primary:hover {
+  background-color: #008ecc;
+}

@@ -1,0 +1,47 @@
+<aside id="sidebar">
+  <div class="text-center mt-4">
+	<i
+	  class="fas fa-user-circle user-icon"
+	  style="font-size: 6rem; color: white"
+	></i>
+	<div class="sidebar-rol-name">
+	  <p style="color: white; font-size: 1rem">Administrador</p>
+	</div>
+  </div>
+  <ul class="sidebar-nav">
+	<li class="sidebar-item">
+	  <a href="/inicio-administrador" class="sidebar-link">
+		<i class="fas fa-home"></i>
+		<span>Inicio</span>
+	  </a>
+	</li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#usuario"
+        aria-expanded="false"
+        aria-controls="usuario"
+      >
+        <i class="fas fa-user"></i>
+        <span>Usuario</span>
+      </a>
+      <ul
+        id="usuario"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/cambiar-contrasena" class="sidebar-link">Cambiar Contraseña</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+   <div class="sidebar-footer">
+    <a href="/" class="sidebar-link">
+      <i class="fas fa-power-off"></i>
+      <span>Logout</span>
+    </a>
+  </div> 
+</aside>
