@@ -14,36 +14,20 @@
     <div class="row">
         <div class="col-12 col-md-4 mb-4">
             <div class="p-3 bg-light rounded shadow-sm">
-                <form id="actualizarCubiculoForm" action="/actualizar-estado-de-cubiculo" method="post">
-                    <h5>Hora de reserva:</h5>
-                    <select name="horaReserva" class="form-control mb-3" id="horaReserva">
-                        <option value="">Seleccione una hora</option>
-                        <option value="08:00">08:00</option>
-                        <option value="09:00">09:00</option>
-                        <option value="10:00">10:00</option>
-                        <option value="11:00">11:00</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:00">13:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="16:00">16:00</option>
-                        <option value="17:00">17:00</option>
-                    </select>
-                    <h5>Cubículo seleccionado:</h5>
-                    <input type="text" name="cubiculoId" class="form-control mb-3" id="cubiculoSeleccionado" readonly>
-                    <h5>Estado:</h5>
-                    <select name="estado" id="estadoSeleccionado" class="form-control mb-3">
-                        <option value="Disponible">Disponible</option>
-                        <option value="Ocupado">Ocupado</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">ACTUALIZAR</button>
-                </form>
+                <h5>Cubículo seleccionado:</h5>
+                <input type="text" class="form-control mb-3" id="cubiculoSeleccionado" disabled>
+                <h5>Estado:</h5>
+                <select id="estadoSeleccionado" class="form-control mb-3">
+                    <option value="disponible">Disponible</option>
+                    <option value="ocupado">Ocupado</option>
+                </select>
+                <button class="btn btn-primary btn-lg w-100 mt-3" onclick="actualizarEstado()">ACTUALIZAR</button>
             </div>
         </div>
         <div class="col-12 col-md-8 mb-4">
             <div class="cubiculos-container">
                 {{#each cubiculos}}
-                <div class="cubiculo {{estado}}" data-cubiculo="{{cubiculo_id}}" data-hora="{{hora_inicio}}" onclick="seleccionarCubiculo('{{cubiculo_id}}', '{{hora_inicio}}', '{{estado}}')">
+                <div class="cubiculo" data-cubiculo="{{cubiculo_id}}" onclick="seleccionarCubiculo('{{cubiculo_id}}', '{{hora_inicio}}', '{{estado}}')">
                     <img src="{{imagenUrl}}" alt="Cubículo {{cubiculo_id}}">
                 </div>
                 {{/each}}
@@ -57,26 +41,42 @@ function seleccionarCubiculo(cubiculoId, hora, estado) {
     document.querySelectorAll('.cubiculo').forEach(cubiculo => {
         cubiculo.classList.remove('selected');
     });
-    const selectedCubiculo = document.querySelector(`.cubiculo[data-cubiculo="${cubiculoId}"]`);
+    const selectedCubiculo = document.querySelector(.cubiculo[data-cubiculo="${cubiculoId}"]);
     selectedCubiculo.classList.add('selected');
     document.getElementById('cubiculoSeleccionado').value = cubiculoId;
-    document.getElementById('horaReserva').value = hora ? hora.substring(0, 5) : '';
-    document.getElementById('estadoSeleccionado').value = estado;
+    document.getElementById('estadoSeleccionado').value = estado.toLowerCase();
 }
 
 function actualizarEstado() {
-    const cubiculoId = document.getElementById('cubiculoSeleccionado').value;
-    const nuevoEstado = document.getElementById('estadoSeleccionado').value;
-    const horaReserva = document.getElementById('horaReserva').value;
+    const cubiculo = document.getElementById('cubiculoSeleccionado').value;
+    const estado = document.getElementById('estadoSeleccionado').value;
+   
 
-    if (cubiculoId) {
-        if (nuevoEstado === 'Ocupado' && !horaReserva) {
-            alert('Seleccione una hora de reserva cuando el cubículo está Ocupado.');
-            return;
-        }
-
-        const form = document.getElementById('actualizarCubiculoForm');
-        form.submit();
+    if (cubiculo) {
+        fetch('/cubiculos/actualizar', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cubiculo_id: cubiculo,
+                estado_actualizado: estado
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al actualizar el estado del cubículo');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Estado del cubículo actualizado correctamente');
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error al actualizar el estado del cubículo:', error);
+            alert('Ocurrió un error al actualizar el estado del cubículo. Inténtelo de nuevo más tarde.');
+        });
     } else {
         alert('Seleccione un cubículo para actualizar su estado.');
     }

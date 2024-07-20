@@ -267,15 +267,15 @@ router.get('/consultar-prestamos-por-estado-o-codigo', prestamoController.consul
 
 router.post('/actualizar-estado-prestamo', prestamoController.actualizarEstadoPrestamo);
 
-router.get("/actualizacion-prestamo-exitosa", (req, res) => {
-  res.render(
-    "pages/actualizar-estado-de-prestamo-page/actualizacion-prestamo-exitosa",
-    {
-      title:
-        "Actualizacion de Estado de Prestamo Exitosa - Biblioteca de la FISI",
-      layout: "layouts/main",
-    }
-  );
+router.get("/actualizacion-exitosa", (req, res) => {
+  const { cubiculo, estado, horaReserva } = req.query;
+
+  res.render("pages/actualizar-estado-de-cubiculo-page/actualizacion-exitosa", {
+    title: "Actualización Exitosa - Biblioteca de la FISI",
+    layout: "layouts/main",
+    cubiculo,
+    estado
+  });
 });
 
 router.get("/consultar-historial-de-prestamos", async (req, res) => {
